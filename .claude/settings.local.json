@@ -7,7 +7,13 @@
       "PowerShell($env:PATH += \";C:\\\\Program Files\\\\Git\\\\cmd\"; cd \"C:\\\\Users\\\\revanth.apuri\\\\Downloads\\\\R&D\"; git --version)",
       "PowerShell(Get-ChildItem *)",
       "PowerShell($git = \"$env:LOCALAPPDATA\\\\Programs\\\\Git\\\\cmd\\\\git.exe\"; cd \"C:\\\\Users\\\\revanth.apuri\\\\Downloads\\\\R&D\"; & $git --version; & $git init; & $git remote -v)",
-      "PowerShell($git = \"$env:LOCALAPPDATA\\\\Programs\\\\Git\\\\cmd\\\\git.exe\"; cd \"C:\\\\Users\\\\revanth.apuri\\\\Downloads\\\\R&D\"; & $git remote add origin https://github.com/Revanth120199/R-D.git; & $git add .; & $git commit -m \"Add Yogurtland R&D Portal interactive HTML\")"
+      "PowerShell($git = \"$env:LOCALAPPDATA\\\\Programs\\\\Git\\\\cmd\\\\git.exe\"; cd \"C:\\\\Users\\\\revanth.apuri\\\\Downloads\\\\R&D\"; & $git remote add origin https://github.com/Revanth120199/R-D.git; & $git add .; & $git commit -m \"Add Yogurtland R&D Portal interactive HTML\")",
+      "PowerShell($git = \"$env:LOCALAPPDATA\\\\Programs\\\\Git\\\\cmd\\\\git.exe\"; cd \"C:\\\\Users\\\\revanth.apuri\\\\Downloads\\\\R&D\"; & $git branch -M main; & $git push -u origin main)",
+      "PowerShell($git = \"$env:LOCALAPPDATA\\\\Programs\\\\Git\\\\cmd\\\\git.exe\"; cd \"C:\\\\Users\\\\revanth.apuri\\\\Downloads\\\\yogurtland-portal\"; & $git init; & $git remote add origin https://github.com/Revanth120199/R-D.git; & $git fetch origin 2>&1; echo \"---\"; & $git branch -M main; & $git add .; & $git commit -m \"Reactify Yogurtland R&D Portal — Vite + React SPA\"; & $git push -u origin main 2>&1)",
+      "PowerShell($git = \"$env:LOCALAPPDATA\\\\Programs\\\\Git\\\\cmd\\\\git.exe\"; cd \"C:\\\\Users\\\\revanth.apuri\\\\Downloads\\\\yogurtland-portal\"; & $git push -u origin main --force 2>&1)",
+      "PowerShell($git = \"$env:LOCALAPPDATA\\\\Programs\\\\Git\\\\cmd\\\\git.exe\"; cd \"C:\\\\Users\\\\revanth.apuri\\\\Downloads\\\\yogurtland-portal\"; & $git status; & $git add .; & $git status)",
+      "PowerShell($git = \"$env:LOCALAPPDATA\\\\Programs\\\\Git\\\\cmd\\\\git.exe\"; cd \"C:\\\\Users\\\\revanth.apuri\\\\Downloads\\\\R&D\"; & $git status)",
+      "PowerShell($git = \"$env:LOCALAPPDATA\\\\Programs\\\\Git\\\\cmd\\\\git.exe\"; cd \"C:\\\\Users\\\\revanth.apuri\\\\Downloads\\\\R&D\"; & $git add .; & $git commit -m \"Add image reference and update settings\"; & $git push 2>&1)"
     ]
   }
 }
