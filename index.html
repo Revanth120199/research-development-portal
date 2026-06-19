@@ -138,6 +138,45 @@ button { cursor: pointer; }
 }
 .toast.show { transform: translateY(0); opacity: 1; }
 
+/* MODAL */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(50,22,36,0.45);
+  z-index: 8000; display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; transition: opacity 0.2s;
+}
+.modal-backdrop.show { opacity: 1; }
+.modal-box {
+  background: #fff; border-radius: 22px; width: 100%; max-width: 520px;
+  box-shadow: 0 20px 60px rgba(50,22,36,0.22);
+  transform: translateY(18px) scale(0.97); transition: transform 0.25s cubic-bezier(0.34,1.4,0.64,1), opacity 0.2s;
+  opacity: 0; overflow: hidden;
+}
+.modal-backdrop.show .modal-box { transform: translateY(0) scale(1); opacity: 1; }
+.modal-field { display: flex; flex-direction: column; gap: 6px; }
+.modal-label { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #9A8791; }
+.modal-input {
+  border: 1.5px solid #F0DBE4; border-radius: 10px; padding: 10px 13px;
+  font-size: 13.5px; font-family: inherit; color: #321624;
+  outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+}
+.modal-input:focus { border-color: #B23A72; box-shadow: 0 0 0 3px rgba(178,58,114,0.12); }
+.modal-select {
+  border: 1.5px solid #F0DBE4; border-radius: 10px; padding: 10px 13px;
+  font-size: 13.5px; font-family: inherit; color: #321624;
+  outline: none; appearance: none; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B6A4AD' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;
+  padding-right: 32px; cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.modal-select:focus { border-color: #B23A72; box-shadow: 0 0 0 3px rgba(178,58,114,0.12); }
+.claim-toggle {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 700; padding: 7px 12px; border-radius: 9px;
+  border: 1.5px solid #F0DBE4; cursor: pointer; transition: all 0.15s;
+  background: #fff; color: #5C4A53;
+}
+.claim-toggle.on { background: #F7E3EC; border-color: #D4A0BC; color: #7E1E48; }
+
 /* FADE IN */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .fade-in { animation: fadeUp 0.2s ease both; }
@@ -192,6 +231,67 @@ button { cursor: pointer; }
 </div>
 <div class="toast" id="toast"></div>
 
+<!-- NEW PROJECT MODAL -->
+<div class="modal-backdrop" id="npModal" onclick="closeNewProject(event)" style="display:none;">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div style="padding:24px 26px 0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+        <h2 style="margin:0;font-family:'Quicksand',sans-serif;font-size:21px;font-weight:700;color:#321624;">New Project</h2>
+        <button onclick="closeNewProject()" style="background:none;border:none;cursor:pointer;color:#9A8791;padding:4px;border-radius:8px;line-height:0;transition:color 0.15s;" onmouseover="this.style.color='#321624'" onmouseout="this.style.color='#9A8791'">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;padding-bottom:22px;">
+        <div class="modal-field">
+          <label class="modal-label" for="np-name">Flavor / Project Name</label>
+          <input class="modal-input" id="np-name" placeholder="e.g. Passionfruit Hibiscus">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div class="modal-field">
+            <label class="modal-label" for="np-theme">Promotion Theme</label>
+            <select class="modal-select" id="np-theme">
+              <option value="Summer Tropics">Summer Tropics</option>
+              <option value="Fall Comfort">Fall Comfort</option>
+              <option value="Spring Carry-in">Spring Carry-in</option>
+              <option value="Verano LTO">Verano LTO</option>
+              <option value="Reformulation">Reformulation</option>
+            </select>
+          </div>
+          <div class="modal-field">
+            <label class="modal-label" for="np-base">Base</label>
+            <select class="modal-select" id="np-base">
+              <option value="Original Tart">Original Tart</option>
+              <option value="Coconut (NF)">Coconut (NF)</option>
+              <option value="Sorbet (NF)">Sorbet (NF)</option>
+              <option value="Greek">Greek</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label" for="np-owner">Lead Scientist</label>
+          <select class="modal-select" id="np-owner">
+            <option value="Vincenza Priana">Vincenza Priana</option>
+            <option value="Maria Sanchez">Maria Sanchez</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label">Claims</label>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <button type="button" class="claim-toggle" id="cl-kosher" onclick="toggleClaim(this,'Kosher')">Kosher</button>
+            <button type="button" class="claim-toggle" id="cl-vegan" onclick="toggleClaim(this,'Vegan')">Vegan</button>
+            <button type="button" class="claim-toggle" id="cl-gf" onclick="toggleClaim(this,'Gluten-Free')">Gluten-Free</button>
+            <button type="button" class="claim-toggle" id="cl-nac" onclick="toggleClaim(this,'No Artificial Color')">No Artificial Color</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#FBF5F8;padding:16px 26px;display:flex;align-items:center;justify-content:flex-end;gap:10px;">
+      <button class="btn-pink" onclick="closeNewProject()">Cancel</button>
+      <button class="btn-berry" onclick="submitNewProject()">Add to Pipeline</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ===================================================================
    STATE
@@ -204,7 +304,8 @@ const S = {
   focusRole: 'scientist',
   showFlags: true,
   doneTasks: new Set(),
-  searchQ: ''
+  searchQ: '',
+  selectedClaims: new Set()
 };
 
 /* ===================================================================
@@ -399,6 +500,62 @@ function apClick(done, label, who) {
 }
 function calClick(name, ok) {
   showToast(ok ? `✓ ${name} — calibrated, all good` : `⚠ ${name} requires calibration today`);
+}
+
+function openNewProject() {
+  S.selectedClaims = new Set();
+  document.querySelectorAll('.claim-toggle').forEach(b => b.classList.remove('on'));
+  document.getElementById('np-name').value = '';
+  document.getElementById('np-theme').value = 'Summer Tropics';
+  document.getElementById('np-base').value = 'Original Tart';
+  document.getElementById('np-owner').value = 'Vincenza Priana';
+  const m = document.getElementById('npModal');
+  m.style.display = 'flex';
+  requestAnimationFrame(() => { requestAnimationFrame(() => { m.classList.add('show'); }); });
+  setTimeout(() => document.getElementById('np-name').focus(), 200);
+}
+
+function closeNewProject(e) {
+  if (e && e.target !== document.getElementById('npModal')) return;
+  const m = document.getElementById('npModal');
+  m.classList.remove('show');
+  setTimeout(() => { m.style.display = 'none'; }, 220);
+}
+
+function toggleClaim(btn, claim) {
+  if (S.selectedClaims.has(claim)) {
+    S.selectedClaims.delete(claim);
+    btn.classList.remove('on');
+  } else {
+    S.selectedClaims.add(claim);
+    btn.classList.add('on');
+  }
+}
+
+function submitNewProject() {
+  const name = document.getElementById('np-name').value.trim();
+  if (!name) {
+    document.getElementById('np-name').focus();
+    document.getElementById('np-name').style.borderColor = '#C84A2C';
+    setTimeout(() => { document.getElementById('np-name').style.borderColor = ''; }, 1500);
+    return;
+  }
+  const id = 'proj_' + Date.now();
+  PROJECTS.push({
+    id,
+    name,
+    theme:    document.getElementById('np-theme').value,
+    base:     document.getElementById('np-base').value,
+    claims:   [...S.selectedClaims],
+    owner:    document.getElementById('np-owner').value,
+    stage:    0,
+    progress: 0,
+    next:     'Ideation kick-off'
+  });
+  closeNewProject();
+  S.filter = 'all';
+  go('pipeline');
+  setTimeout(() => showToast(`"${name}" added to Ideation`), 250);
 }
 
 /* ===================================================================
@@ -754,7 +911,7 @@ function renderPipeline() {
   <div style="display:flex;align-items:center;gap:9px;margin-bottom:18px;flex-wrap:wrap;">
     <span style="font-size:13px;font-weight:700;color:#9A8791;margin-right:2px;">Filter:</span>
     ${fDefs.map(f=>`<button class="fbtn ${S.filter===f.key?'active':'idle'}" onclick="setFilter('${f.key}')">${f.label}</button>`).join('')}
-    <button class="btn-berry" style="margin-left:auto;" onclick="showToast('New project form — coming soon in full build')">
+    <button class="btn-berry" style="margin-left:auto;" onclick="openNewProject()">
       ${svg(13,13,ICO.plus)} New Project
     </button>
   </div>
