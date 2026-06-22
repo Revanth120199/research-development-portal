@@ -242,12 +242,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     function buildPalette() {
-      if (document.getElementById('yl-portal-fab')) return;
-
-      const fab = document.createElement('button');
-      fab.id = 'yl-portal-fab';
-      fab.className = 'yl-portal-fab';
-      fab.textContent = 'Quick Actions';
+      const existingOverlay = document.getElementById('yl-portal-overlay');
+      const existingToast = document.getElementById('yl-portal-toast');
+      if (existingOverlay && existingToast) return;
 
       const overlay = document.createElement('div');
       overlay.id = 'yl-portal-overlay';
@@ -273,7 +270,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         '<button class="yl-portal-chip" data-action="focus-search" type="button">Focus Search</button>',
         '<button class="yl-portal-chip" data-action="clear-session" type="button">Clear Saved Session</button>',
         '</div>',
-        '<div style="margin-top:16px;font:600 12px/1.5 -apple-system,BlinkMacSystemFont,Plus Jakarta Sans,sans-serif;color:#7b6a73">Shortcuts: <strong style="color:#2C1F27">Alt+1</strong> Dashboard, <strong style="color:#2C1F27">Alt+2</strong> Complaints, <strong style="color:#2C1F27">Alt+3</strong> Projects, <strong style="color:#2C1F27">Alt+4</strong> Samples, <strong style="color:#2C1F27">Alt+5</strong> Messages, <strong style="color:#2C1F27">/</strong> Search, <strong style="color:#2C1F27">?</strong> Quick Actions</div>',
+        '<div style="margin-top:16px;font:600 12px/1.5 -apple-system,BlinkMacSystemFont,Plus Jakarta Sans,sans-serif;color:#7b6a73">Shortcuts: <strong style="color:#2C1F27">Alt+1</strong> Dashboard, <strong style="color:#2C1F27">Alt+2</strong> Complaints, <strong style="color:#2C1F27">Alt+3</strong> Projects, <strong style="color:#2C1F27">Alt+4</strong> Samples, <strong style="color:#2C1F27">Alt+5</strong> Messages, <strong style="color:#2C1F27">/</strong> Search, <strong style="color:#2C1F27">?</strong> Menu</div>',
         '</div>'
       ].join('');
 
@@ -281,11 +278,9 @@ document.addEventListener('DOMContentLoaded', async function() {
       toastNode.id = 'yl-portal-toast';
       toastNode.className = 'yl-portal-toast';
 
-      document.body.appendChild(fab);
       document.body.appendChild(overlay);
       document.body.appendChild(toastNode);
 
-      fab.addEventListener('click', togglePalette);
       overlay.addEventListener('click', function (event) {
         if (event.target === overlay) closePalette();
       });
